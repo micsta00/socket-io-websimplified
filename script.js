@@ -3,16 +3,6 @@ const messageInput = document.getElementById("message-input")
 const roomInput = document.getElementById("room-input")
 const form = document.getElementById("form")
 
-form.addEventListener("submit", e => {
-    e.preventDefault()
-    const message = messageInput.value
-    const room = roomInput.value
-
-    if (message === "") return
-    displayMessage(message)
-})
-
-
 const socket = io('http://localhost:3000')
 
 socket.on('chat-message', data => {
@@ -21,6 +11,20 @@ socket.on('chat-message', data => {
 
 socket.on('connect', () => {
     displayMessage(`You connected with id: ${socket.id}`)
+})
+
+socket.on('receive-message', message => {
+    displayMessage(message)
+})
+
+form.addEventListener("submit", e => {
+    e.preventDefault()
+    const message = messageInput.value
+    const room = roomInput.value
+
+    if (message === "") return
+    displayMessage(message)
+    socket.emit('send-message', message)
 })
 
 joinRoomButton.addEventListener("click", () => {
