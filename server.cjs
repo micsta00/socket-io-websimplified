@@ -51,6 +51,8 @@ io.on('connection', socket => {
         socket.join(room)
         callback(`Joined ${room}`)
     })
+    // receive 'ping' to testing what if disconnected
+    socket.on('ping', num => console.log(num))
 })
 
 instrument(io, { auth: false })

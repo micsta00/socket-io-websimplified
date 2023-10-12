@@ -49,3 +49,23 @@ function displayMessage(message) {
     div.textContent = message
     document.getElementById("message-container").append(div)
 }
+// ==== some test for checking what if disconnected  ========
+let count = 0
+// no volatile = as soon as connected, deliver all 'pings' gathered while disconnected
+// setInterval(() => {
+//     socket.emit('ping', ++count)
+// }, 1000)
+
+//volatile - if cant send 'ping' count but after connection dont send all gathered pings = dont gather it
+setInterval(() => {
+    socket.volatile.emit('ping', ++count)
+}, 1000)
+
+// ================= keyboard ===============================
+document.addEventListener('keydown', e => {
+    if (e.target.matches('input')) return
+
+    if (e.key === "c") socket.connect()
+    if (e.key === "d") socket.disconnect()
+
+})
