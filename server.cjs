@@ -2,9 +2,14 @@ const { instrument } = require('@socket.io/admin-ui')
 const httpServer = require("http").createServer();
 const io = require('socket.io')(httpServer, {
     cors: {
-        origin: ['https://admin.socket.io', 'http://localhost:5173'],
-        credentials: true
+        origin: ['https://admin.socket.io', 'http://localhost:5173']
     }
+})
+
+// create namespace + userSocket in script.js
+const userIo = io.of('/user')
+userIo.on('connection', socket => {
+    console.log('connected to user namespace')
 })
 
 io.on('connection', socket => {

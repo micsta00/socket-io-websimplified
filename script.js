@@ -4,6 +4,8 @@ const roomInput = document.getElementById("room-input")
 const form = document.getElementById("form")
 
 const socket = io('http://localhost:3000')
+// connecting to user namespace
+const userSocket = io('http://localhost:3000/user')
 
 socket.on('chat-message', data => {
     console.log(data)
