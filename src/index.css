@@ -17,11 +17,17 @@ body {
   margin: 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 90%;
+  max-width: 1200px;
+  flex-wrap: wrap;
 }
 
 #message-container {
-  width: 80%;
-  max-width: 1200px;
+  border: 1px solid black;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 #message-container div {
@@ -33,16 +39,22 @@ body {
   background-color: #FFF;
 }
 
-#send-container {
-  position: fixed;
-  padding-bottom: 30px;
-  bottom: 0;
-  background-color: white;
-  max-width: 1200px;
-  width: 80%;
+
+#form {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0.7em 0;
+  gap: 0.5em;
 }
 
-#message-input {
-  flex-grow: 1;
+
+label,
+button {
+  flex-basis: 15%;
+
+}
+
+input {
+  flex-basis: 60%;
 }
