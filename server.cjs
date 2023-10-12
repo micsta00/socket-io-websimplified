@@ -21,7 +21,8 @@ io.on('connection', socket => {
 
         console.log(message)
     })
-    socket.on('join-room', room => {
+    socket.on('join-room', (room, callback) => {
         socket.join(room)
+        callback(`Joined ${room}`)
     })
 })
