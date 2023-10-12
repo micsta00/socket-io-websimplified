@@ -6,11 +6,29 @@ const io = require('socket.io')(httpServer, {
     }
 })
 
+// ========= all from here only on this middleware ================================
 // create namespace + userSocket in script.js
 const userIo = io.of('/user')
 userIo.on('connection', socket => {
-    console.log('connected to user namespace')
+    console.log('connected to user namespace with username ' + socket.username)
 })
+
+// setting middleware + {auth: {token:'Test'}} in userSocket in script.js
+userIo.use((socket, next) => {
+    if (socket.handshake.auth.token) {
+        socket.username = getUsernameFromToken(socket.handshake.auth.token)
+        next()
+    } else {
+        next(new Error('Please send token'))
+    }
+})
+
+// here some authentication stuff in the future
+function getUsernameFromToken(token) {
+    return token
+}
+
+// ======================== end ====================================================
 
 io.on('connection', socket => {
     console.log(socket.id)

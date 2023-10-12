@@ -5,11 +5,17 @@ const form = document.getElementById("form")
 
 const socket = io('http://localhost:3000')
 // connecting to user namespace
-const userSocket = io('http://localhost:3000/user')
+const userSocket = io('http://localhost:3000/user', { auth: { token: 'Test' } })
+
+// if no authentication passed
+userSocket.on('connect_error', error => {
+    displayMessage(error)
+})
 
 socket.on('chat-message', data => {
     console.log(data)
 })
+
 
 socket.on('connect', () => {
     displayMessage(`You connected with id: ${socket.id}`)
