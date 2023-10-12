@@ -1,6 +1,9 @@
-const io = require('socket.io')(3000, {
+const { instrument } = require('@socket.io/admin-ui')
+const httpServer = require("http").createServer();
+const io = require('socket.io')(httpServer, {
     cors: {
-        origin: ['http://localhost:5173']
+        origin: ['https://admin.socket.io', 'http://localhost:5173'],
+        credentials: true
     }
 })
 
@@ -26,3 +29,7 @@ io.on('connection', socket => {
         callback(`Joined ${room}`)
     })
 })
+
+instrument(io, { auth: false })
+
+httpServer.listen(3000)
